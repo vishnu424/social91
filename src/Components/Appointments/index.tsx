@@ -49,7 +49,7 @@ const Appointments = (): JSX.Element => {
       }
     };
     fetchData();
-  }, []);
+  }, [appointments]);
 
   return (
     <>

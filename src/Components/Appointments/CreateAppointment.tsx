@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import TimePicker, { TimePickerValue } from "react-time-picker";
 
@@ -117,10 +117,16 @@ const CreateAppointment = ({ appointments, setAppointments }: Props) => {
           end: suggestedEndTime,
           title: title,
         };
-        setAppointments([...appointments, newAppointment]);
-        // setSelectedDate(null);
-        // setSelectedTime(null);
-        // setTitle("");
+        const updatedAppointments = [...appointments, newAppointment];
+        setAppointments(updatedAppointments);
+        setSelectedDate(null);
+        setSelectedTime(null);
+        setTitle("");
+
+        localStorage.setItem(
+          "appointments",
+          JSON.stringify(updatedAppointments)
+        );
       }
     } else {
       alert("Please select a date and time for the appointment.");
@@ -138,6 +144,7 @@ const CreateAppointment = ({ appointments, setAppointments }: Props) => {
           onChange={(date) => setSelectedDate(date)}
           className="border-gray-300 border rounded-lg py-2 px-4"
           dateFormat="MMMM d, yyyy"
+          minDate={new Date()}
         />
         <label htmlFor="time-picker">Time:</label>
         <TimePicker
